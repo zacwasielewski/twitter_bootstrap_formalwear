@@ -1,8 +1,8 @@
-require 'twitter_bootstrap_form_for'
+require 'twitter-bootstrap-formalwear'
 require 'action_view/helpers'
 
-class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
-  include TwitterBootstrapFormFor::FormHelpers
+class TwitterBootstrapFormalwear::FormBuilder < ActionView::Helpers::FormBuilder
+  include TwitterBootstrapFormalwear::FormHelpers
 
   attr_reader :template
   attr_reader :object
@@ -83,7 +83,7 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
       template.fields_for(
         self.object_name,
         self.object,
-        self.options.merge(:builder => TwitterBootstrapFormFor::FormControls),
+        self.options.merge(:builder => TwitterBootstrapFormalwear::FormControls),
         &block
       )
     }
@@ -185,12 +185,12 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
   end
 end
 
-class TwitterBootstrapFormFor::FormControls < ActionView::Helpers::FormBuilder
+class TwitterBootstrapFormalwear::FormControls < ActionView::Helpers::FormBuilder
   attr_reader :template
   attr_reader :object
   attr_reader :object_name
 
-  TwitterBootstrapFormFor::FormBuilder::INPUTS.each do |input|
+  TwitterBootstrapFormalwear::FormBuilder::INPUTS.each do |input|
     define_method input do |attribute, *args, &block|
       options = args.extract_options!
       add_on  = options.delete(:add_on)
