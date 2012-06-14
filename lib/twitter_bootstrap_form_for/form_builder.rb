@@ -41,12 +41,10 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
   end
 
   #
-  # Attaches a label to the inputs rendered inside of the block passed to it.
-  # Associates the label with the input for the +attribute+ given. If +text+
-  #is passed, uses that as the text for the label; otherwise humanizes the
-  # +attribute+ name.
+  # Generates a control-group div element for the given +attribute+,
+  # containing label and controls elements.
   #
-  def label(attribute, text = '', options = {}, &block)
+  def group(attribute, text = '', options = {}, &block)
     text, attribute = attribute, nil if attribute.kind_of? String
 
     options = { :class => 'control-label' }.merge(options)
@@ -54,21 +52,41 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
     classes = _wrapper_classes attribute, 'control-group'
 
     template.content_tag(:div, :id => id, :class => classes) do
-      template.concat case
-        when attribute && text then super(attribute, text, options, &nil)
-        when attribute         then super(attribute, nil,  options, &nil)
-        when text              then template.label_tag(nil, text, options, &nil)
-      end
-
-      template.concat template.content_tag(:div, :class => 'controls') {
-        template.fields_for(
-          self.object_name,
-          self.object,
-          self.options.merge(:builder => TwitterBootstrapFormFor::FormControls),
-          &block
-        )
-      }
+        template.concat self.label(attribute, text, options, &block)
+        template.concat self.controls(attribute, text, options, &block)
     end
+  end
+
+  #
+  # Generates a label element for the given +attribute+. If +text+ is passed, uses
+  # that as the text for the label; otherwise humanizes the +attribute+ name.
+  #
+  def label(attribute, text = '', options = {}, &block)
+    text, attribute = attribute, nil if attribute.kind_of? String
+
+    options = { :class => 'control-label' }.merge(options)
+
+    case
+      when attribute && text then super(attribute, text, options, &nil)
+      when attribute         then super(attribute, nil,  options, &nil)
+      when text              then template.label_tag(nil, text, options, &nil)
+    end
+  end
+
+  #
+  # Generates a controls div element for the given +attribute+.
+  #
+  def controls(attribute, text = '', options = {}, &block)
+    text, attribute = attribute, nil if attribute.kind_of? String
+
+    template.content_tag(:div, :class => 'controls') {
+      template.fields_for(
+        self.object_name,
+        self.object,
+        self.options.merge(:builder => TwitterBootstrapFormFor::FormControls),
+        &block
+      )
+    }
   end
 
   #
@@ -93,11 +111,29 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
   end
 
   INPUTS.each do |input|
-    define_method input do |attribute, *args, &block|
+    define_method input.to_s + '_group' do |attribute, *args, &block|
+      options = args.extract_options!
+      text    = args.any? ? args.shift : ''
+
+      self.group(attribute, text) do |builder|
+        builder.send(input, attribute, *(args << options), &block)
+      end
+    end
+
+    define_method input.to_s + '_label' do |attribute, *args, &block|
       options = args.extract_options!
       text    = args.any? ? args.shift : ''
 
       self.label(attribute, text) do |builder|
+        builder.send(input, attribute, *(args << options), &block)
+      end
+    end
+
+    define_method input.to_s + '_controls' do |attribute, *args, &block|
+      options = args.extract_options!
+      text    = args.any? ? args.shift : ''
+
+      self.controls(attribute, text) do |builder|
         builder.send(input, attribute, *(args << options), &block)
       end
     end
