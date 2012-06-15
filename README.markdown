@@ -15,7 +15,7 @@ non-Bootstrap markup in your form if necessary.
 
 ## Dependencies ##
 
-Rails and Twitter Bootstrap, of course. Also, a familiarity with [Rails FormHelper]
+Rails and Twitter Bootstrap, of course. Also, a familiarity with Rails FormHelper
 syntax and usage will be helpful.
 
 
