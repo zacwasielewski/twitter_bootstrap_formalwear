@@ -44,16 +44,17 @@ class TwitterBootstrapFormalwear::FormBuilder < ActionView::Helpers::FormBuilder
   # Generates a control-group div element for the given +attribute+,
   # containing label and controls elements.
   #
-  def group(attribute, text = '', options = {}, &block)
+  def group(attribute = '', text = '', options = {}, &block)
     text, attribute = attribute, nil if attribute.kind_of? String
 
-    options = { :class => 'control-label' }.merge(options)
     id      = _wrapper_id      attribute, 'control_group'
     classes = _wrapper_classes attribute, 'control-group'
 
     template.content_tag(:div, :id => id, :class => classes) do
+      if !attribute.blank?
         template.concat self.label(attribute, text, options, &block)
-        template.concat self.controls(attribute, text, options, &block)
+      end
+      template.concat self.controls(attribute, text, options, &block)
     end
   end
 

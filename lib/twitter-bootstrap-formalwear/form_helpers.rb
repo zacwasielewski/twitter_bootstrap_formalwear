@@ -3,7 +3,7 @@ require 'twitter-bootstrap-formalwear'
 module TwitterBootstrapFormalwear::FormHelpers
   [:form_for, :fields_for].each do |method|
     module_eval do
-      define_method "twitter_bootstrap_#{method}" do |record, *args, &block|
+      define_method "formalwear_#{method}" do |record, *args, &block|
         # add the TwitterBootstrap builder to the options
         options           = args.extract_options!
         options[:builder] = TwitterBootstrapFormalwear::FormBuilder
