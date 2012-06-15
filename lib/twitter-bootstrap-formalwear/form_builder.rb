@@ -10,6 +10,8 @@ class TwitterBootstrapFormalwear::FormBuilder < ActionView::Helpers::FormBuilder
 
   INPUTS = [
     :select,
+    :check_box,
+    :radio_button,
     *ActionView::Helpers::FormBuilder.instance_methods.grep(%r{
       _(area|field|select)$ # all area, field, and select methods
     }mx).map(&:to_sym)
@@ -116,7 +118,7 @@ class TwitterBootstrapFormalwear::FormBuilder < ActionView::Helpers::FormBuilder
       options = args.extract_options!
       text    = args.any? ? args.shift : ''
 
-      self.group(attribute, text) do |builder|
+      self.group(attribute, text, options) do |builder|
         builder.send(input, attribute, *(args << options), &block)
       end
     end
@@ -125,7 +127,7 @@ class TwitterBootstrapFormalwear::FormBuilder < ActionView::Helpers::FormBuilder
       options = args.extract_options!
       text    = args.any? ? args.shift : ''
 
-      self.label(attribute, text) do |builder|
+      self.label(attribute, text, options) do |builder|
         builder.send(input, attribute, *(args << options), &block)
       end
     end
@@ -134,7 +136,7 @@ class TwitterBootstrapFormalwear::FormBuilder < ActionView::Helpers::FormBuilder
       options = args.extract_options!
       text    = args.any? ? args.shift : ''
 
-      self.controls(attribute, text) do |builder|
+      self.controls(attribute, text, options) do |builder|
         builder.send(input, attribute, *(args << options), &block)
       end
     end
@@ -206,6 +208,7 @@ class TwitterBootstrapFormalwear::FormControls < ActionView::Helpers::FormBuilde
     end
   end
 
+=begin
   def check_box(attribute, text, options = {}, checked_value = 1, unchecked_value = 0)
     klasses = _merge_classes 'checkbox', options.delete(:inline) && 'inline'
 
@@ -225,6 +228,7 @@ class TwitterBootstrapFormalwear::FormControls < ActionView::Helpers::FormBuilde
       yield if block_given?
     end
   end
+=end
 
   protected
 
