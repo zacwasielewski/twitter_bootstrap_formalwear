@@ -134,5 +134,9 @@ I think it's safe to simply overwrite the old method. Thoughts?
 I've been using this fork successfully on my own projects, but some less common
 use cases may be buggy.
 
+## Todo ##
+
+Tests!
+
 [Twitter Bootstrap]: http://twitter.github.com/bootstrap/
 [Rails FormHelper]: http://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html
