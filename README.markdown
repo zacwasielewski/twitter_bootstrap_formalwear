@@ -15,7 +15,7 @@ non-Bootstrap markup in your form if necessary.
 
 ## Dependencies ##
 
-Rails and Twitter Bootstrap, of course. A familiarity with Rails FormHelper
+Rails and Twitter Bootstrap (v2.0+), of course. A familiarity with Rails FormHelper
 usage and syntax will be helpful.
 
 
@@ -23,7 +23,7 @@ usage and syntax will be helpful.
 
 Add the dependency to your `Gemfile`:
 
-    gem 'twitter_bootstrap_formalwear', :git => 'git@github.com:zacwasielewski/twitter_bootstrap_formalwear.git', :branch => 'bootstrap-2.0'
+    gem 'twitter_bootstrap_formalwear'
 
 Then run `bundle` from the project directory.
 
