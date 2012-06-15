@@ -7,8 +7,8 @@ Gem::Specification.new do |s|
   s.authors     = [ 'Zac Wasielewski' ]
   s.email       = [ 'zac@wasielewski.org' ]
   s.homepage    = 'http://github.com/zacwasielewski/twitter_bootstrap_formalwear'
-  s.summary     = 'Rails form builder optimized for Twitter Bootstrap'
-  s.description = 'Dress up your Rails forms with Twitter Bootstrap-friendly markup'
+  s.summary     = 'Rails form helper optimized for Twitter Bootstrap'
+  s.description = 'Dress up your Rails forms with Twitter Bootstrap markup'
 
   s.files        = `git ls-files`.split("\n")
   s.executables  = `git ls-files`.split("\n").map {|f| f =~ /^bin\/(.*)/ ? $1 : nil }.compact
