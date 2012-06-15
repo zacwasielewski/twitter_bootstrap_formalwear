@@ -1,3 +1,9 @@
+Twitter Bootstrap Formalwear Changes
+====================================
+
+## 1.0.0.rc1 (2012-06-15) ##
+  - Initial public release
+
 Twitter Bootstrap Form For Changes
 ==================================
 
