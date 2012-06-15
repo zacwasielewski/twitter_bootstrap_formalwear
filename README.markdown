@@ -15,8 +15,8 @@ non-Bootstrap markup in your form if necessary.
 
 ## Dependencies ##
 
-Rails and Twitter Bootstrap, of course. Also, a familiarity with Rails FormHelper
-syntax and usage will be helpful.
+Rails and Twitter Bootstrap, of course. A familiarity with Rails FormHelper
+usage and syntax will be helpful.
 
 
 ## Installation ##
@@ -88,7 +88,7 @@ If you need fine-grained control, you can generate only a Bootstrap label:
         <input type="text" name="first_name" value="" class="input-large" />
     </div>
 
-The standard Rails FormHelper methods still work if needed:
+For you control freaks, the standard Rails FormHelper methods still work if needed:
 
     <%= f.text_field :first_name, :class => 'input-large' %>
 
