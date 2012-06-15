@@ -1,86 +1,94 @@
-Twitter Bootstrap Form For
-==========================
+Twitter Bootstrap Formalwear
+============================
 
-`twitter_bootstrap_form_for` is a Rails FormBuilder DSL that, like Formtastic,
-makes it easier to create semantically awesome, readily-stylable, and
-wonderfully accessible HTML forms in your Rails applications. It abides by
-the markup expectations of [Twitter Bootstrap], make your forms look great right
-out of the box.
+`twitter_bootstrap_formalwear` dresses up your Rails FormBuilder forms with
+[Twitter Bootstrap]-friendly markup. It is a lightly-modified fork of
+[`twitter_bootstrap_form_for`](https://github.com/stouset/twitter_bootstrap_form_for).
 
-However, it also tries not to do too much. Rather than try to guess at input
-types and provide an exhaustive set of options for each tag helper (as
-Formtastic does), it only lightly wraps the existing Rails form tag helpers.
+Unlike `twitter_bootstrap_formalwear`, which overwrites existing `form_for` methods,
+`twitter_bootstrap_formalwear` extends FormBuilder with
+new methods to generate labels, controls, and control groups.
 
-## Dependencies ##
+Because existing form methods remain intact, you have the option to generate non-Bootstrap
+markup in your form if necessary.
 
-Just Rails. But you were going to use that anyway, weren't you?
 
-## Syntax ##
+## Installation ##
 
-```haml
-/ supports both vertical and horizontal forms
-= twitter_bootstrap_form_for @user, :html => { :class => 'form-horizontal'}  do |user|
+Add the dependency to your `Gemfile`:
 
-  / wraps a section in a fieldset with the provided legend text
-  = user.fieldset 'Sign up', :class => 'sign_up' do
+    gem 'twitter_bootstrap_formalwear', :git => 'git@github.com:zacwasielewski/twitter_bootstrap_formalwear.git', :branch => 'bootstrap-2.0'
 
-    / generates a standard email field
-    = user.email_field :email, :placeholder => 'me@example.com'
+Then run `bundle` from the project directory.
 
-    / generates a password field with a descriptive aside
-    = user.password_field :password do
-      %span.help-block
-        Must be no larger than 6 characters<br/>
-        Must contain only the letters 'x' or 'p'
 
-    / a field with a custom label
-    = user.password_field :password_confirmation, 'Confirm Password'
+## Usage ##
 
-    / input fields with custom add-ons
-    = user.text_field :twitter_id, 'Twitter', :class => 'medium', :add_on => :prepend do
-      %span.add-on @
+Begin by creating a form, using the same syntax as `form_for`:
 
-    / select fields now have the second parameter as a label
-    = user.date_select :born_on, 'Born on', {}, :class => 'span2'
+    <%= formalwear_form_for (@user, :url => user_path(@user.id),
+                                             :html => { :class => 'form-horizontal' }) do |f| %>
 
-    / inline inputs
-    = user.label 'Interests' do |controls|
-      #{controls.text_field :interest_1, :class => 'span2 inline'},
-      #{controls.text_field :interest_2, :class => 'span2 inline'}, and
-      #{controls.text_field :interest_3, :class => 'span2 inline'}
+To create form elements, you'll usually want to generate a Bootstrap control-group wrapper, containing a label and controls:
 
-    / group of radio buttons
-    = user.label 'Email Preferences' do |controls|
-      = controls.radio_button :email, :html,  'HTML Email', :checked => true
-      = controls.radio_button :email, :plain, 'Plain Text'
+    <%= f.text_field_group :name, :class => 'input-large' %>
 
-    / group of checkboxes
-    = user.label 'Agreements' do |controls|
-      = controls.check_box :agree,   'I agree to the abusive Terms and Conditions'
-      = controls.check_box :spam,    'I agree to receive all sorts of spam'
-      = controls.check_box :spammer, 'I agree to let the site spam others through my Twitter account'
+    # =>
+    <div class="control-group">
+        <label class="control-label" for="name">Name</label>
+        <div class="controls">
+            <input type="text" name="name" value="" class="input-large" />
+        </div>
+    </div>
 
-    / wraps buttons in a distinctive style
-    = user.actions do
-      = user.submit 'Sign up'
-      = user.button 'Cancel'
-```
+To generate only a Bootstrap label:
 
-That code produces the following output, with no custom stylesheets.
+    <%= f.text_field_label :name %>
 
-![](https://github.com/stouset/twitter_bootstrap_form_for/raw/master/examples/screenshot.png)
+    # =>
+    <label class="control-label" for="name">Name</label>
 
-That's it. All of the Rails field helpers you know and love work just like
-their normal FormBuilder counterparts, but with minor extensions to expose
-the functionality anticipated by Twitter Bootstrap.
+...or a Bootstrap control:
 
-## Form Helper Changes ##
+    <%= f.text_field_control :name, :class => 'input-large' %>
 
-The changes this `FormBuilder` effects to the existing Rails form helpers is
-simple:
+    # =>
+    <div class="controls">
+        <input type="text" name="name" value="" class="input-large" />
+    </div>
 
-  * the second parameter becomes the label (pass false to disable, nil for default)
-  * the last options hash accepts an `:add_on` key
-  * if a block is passed, the HTML it outputs is placed immediately after the input
+The standard form field helpers are still available if needed:
+
+    <%= f.text_field :name, :class => 'input-large' %>
+
+    # =>
+    <input type="text" name="name" value="" class="input-large" />
+
+
+## More Usage Examples ##
+
+Form actions:
+
+    <%= f.actions do %>
+       <%= f.submit 'Sign up', :class => 'btn' %>
+    <% end %>
+    
+    # =>
+    <div class="form-actions">
+        <input class="btn" type="submit" value="Sign up">
+    </div>
+    
+Checkboxes (note that omitting the first argument will omit the label):
+
+    <%= f.group do %>
+        <%= f.check_box :remember_me %> Remember Me?
+    <% end %>
+
+    # =>
+    <div class="control-group">
+        <div class="controls">
+            <input id="remember_me" name="remember_me" type="checkbox" value="1" /> Remember Me?
+        </div>
+    </div>
 
 [Twitter Bootstrap]: http://twitter.github.com/bootstrap/
