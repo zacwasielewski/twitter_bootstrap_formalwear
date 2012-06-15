@@ -1,13 +1,13 @@
 Twitter Bootstrap Formalwear
 ============================
 
-`twitter_bootstrap_formalwear` dresses up your Ruby on Rails forms with
-[Twitter Bootstrap]-friendly markup. It is a lightly-modified fork of
+Twitter Bootstrap Formalwear dresses up your Ruby on Rails forms with
+[Twitter Bootstrap] markup. It is a lightly-modified fork of
 [`twitter_bootstrap_form_for`](https://github.com/stouset/twitter_bootstrap_form_for).
 
-Unlike `twitter_bootstrap_formalwear`, which overwrites existing [Rails FormHelper] methods,
-`twitter_bootstrap_formalwear` extends FormHelper with new methods to generate
-labels, controls, and control groups.
+Unlike `twitter_bootstrap_form_for`, which overwrites existing [Rails FormHelper] methods,
+`twitter_bootstrap_formalwear` extends FormHelper with additional methods to generate
+labels, controls, control groups, and action blocks.
 
 Because existing methods remain intact, you maintain the option to generate
 non-Bootstrap markup in your form if necessary.
