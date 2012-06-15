@@ -1,4 +1,4 @@
-require 'twitter-bootstrap-formalwear'
+require 'twitter_bootstrap_formalwear'
 require 'action_view/helpers'
 
 class TwitterBootstrapFormalwear::FormBuilder < ActionView::Helpers::FormBuilder

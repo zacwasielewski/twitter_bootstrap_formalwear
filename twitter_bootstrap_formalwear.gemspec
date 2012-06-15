@@ -1,12 +1,12 @@
-require File.expand_path('../lib/twitter-bootstrap-formalwear/version', __FILE__)
+require File.expand_path('../lib/twitter_bootstrap_formalwear/version', __FILE__)
 
 Gem::Specification.new do |s|
-  s.name        = 'twitter-bootstrap-formalwear'
+  s.name        = 'twitter_bootstrap_formalwear'
   s.version     = TwitterBootstrapFormalwear::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = [ 'Zac Wasielewski' ]
   s.email       = [ 'zac@wasielewski.org' ]
-  s.homepage    = 'http://github.com/zacwasielewski/twitter-bootstrap-formalwear'
+  s.homepage    = 'http://github.com/zacwasielewski/twitter_bootstrap_formalwear'
   s.summary     = 'Rails form builder optimized for Twitter Bootstrap'
   s.description = 'Dress up your Rails forms with Twitter Bootstrap-friendly markup'
 

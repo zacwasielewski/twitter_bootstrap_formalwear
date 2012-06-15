@@ -23,7 +23,7 @@ usage and syntax will be helpful.
 
 Add the dependency to your `Gemfile`:
 
-    gem 'twitter-bootstrap-formalwear', :git => 'git@github.com:zacwasielewski/twitter-bootstrap-formalwear.git', :branch => 'bootstrap-2.0'
+    gem 'twitter_bootstrap_formalwear', :git => 'git@github.com:zacwasielewski/twitter_bootstrap_formalwear.git', :branch => 'bootstrap-2.0'
 
 Then run `bundle` from the project directory.
 

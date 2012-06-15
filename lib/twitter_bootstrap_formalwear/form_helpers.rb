@@ -1,4 +1,4 @@
-require 'twitter-bootstrap-formalwear'
+require 'twitter_bootstrap_formalwear'
 
 module TwitterBootstrapFormalwear::FormHelpers
   [:form_for, :fields_for].each do |method|
