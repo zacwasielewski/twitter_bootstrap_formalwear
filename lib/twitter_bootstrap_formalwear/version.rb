@@ -1,3 +1,3 @@
 module TwitterBootstrapFormalwear
-  VERSION = '1.0.0.rc2'
+  VERSION = '0.9.1'
 end
