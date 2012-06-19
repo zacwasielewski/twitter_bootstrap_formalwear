@@ -9,9 +9,9 @@ class TwitterBootstrapFormalwear::FormBuilder < ActionView::Helpers::FormBuilder
   attr_reader :object_name
 
   INPUTS = [
-    :select,
     :check_box,
     :radio_button,
+    :select,
     *ActionView::Helpers::FormBuilder.instance_methods.grep(%r{
       _(area|field|select)$ # all area, field, and select methods
     }mx).map(&:to_sym)
@@ -19,10 +19,10 @@ class TwitterBootstrapFormalwear::FormBuilder < ActionView::Helpers::FormBuilder
 
   INPUTS.delete(:hidden_field)
 
-  TOGGLES = [
-    :check_box,
-    :radio_button,
-  ]
+  #TOGGLES = [
+  #  :check_box,
+  #  :radio_button,
+  #]
 
   #
   # Wraps the contents of the block passed in a fieldset with optional
@@ -67,7 +67,7 @@ class TwitterBootstrapFormalwear::FormBuilder < ActionView::Helpers::FormBuilder
   def label(attribute, text = '', options = {}, &block)
     text, attribute = attribute, nil if attribute.kind_of? String
 
-    options = { :class => 'control-label' }.merge(options)
+    options = options.merge(:class => 'control-label')
 
     case
       when attribute && text then super(attribute, text, options, &nil)
