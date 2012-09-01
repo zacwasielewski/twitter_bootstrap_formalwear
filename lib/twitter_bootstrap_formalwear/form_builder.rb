@@ -59,6 +59,24 @@ class TwitterBootstrapFormalwear::FormBuilder < ActionView::Helpers::FormBuilder
       template.concat self.controls(attribute, text, options, &block)
     end
   end
+  
+  #
+  # Generates a control-group div element for the given collection_select +attribute+,
+  # containing label and controls elements.
+  #
+  def group_for_collection_select(attribute = '', text = '', choices = {}, value_method = '', text_method = '', options = {}, &block)
+    text, attribute = attribute, nil if attribute.kind_of? String
+
+    id      = _wrapper_id      attribute, 'control_group'
+    classes = _wrapper_classes attribute, 'control-group'
+
+    template.content_tag(:div, :id => id, :class => classes) do
+      if !attribute.blank?
+        template.concat self.label(attribute, text, options, &block)
+      end
+      template.concat self.controls_for_collection_select(attribute, text, choices, value_method, text_method, options, &block)
+    end
+  end
 
   #
   # Generates a label element for the given +attribute+. If +text+ is passed, uses
@@ -93,6 +111,38 @@ class TwitterBootstrapFormalwear::FormBuilder < ActionView::Helpers::FormBuilder
   end
 
   #
+  # Generates a controls div element for the given +attribute+.
+  #
+  def controls_for_collection_select(attribute, text = '', choices = {}, value_method = '', text_method = '', options = {}, &block)
+    text, attribute = attribute, nil if attribute.kind_of? String
+
+    template.content_tag(:div, :class => 'controls') {
+      template.fields_for(
+        self.object_name,
+        self.object,
+        self.options.merge(:builder => TwitterBootstrapFormalwear::FormControls),
+        &block
+      )
+    }
+  end
+
+  #
+  # Generates a controls div element for the given +attribute+.
+  #
+  def collection_select_controls(attribute, text = '', choices = {}, value_method = '', text_method = '', options = {}, &block)
+    text, attribute = attribute, nil if attribute.kind_of? String
+
+    template.content_tag(:div, :class => 'controls') {
+      template.fields_for(
+        self.object_name,
+        self.object,
+        self.options.merge(:builder => TwitterBootstrapFormalwear::FormControls),
+        &block
+      )
+    }
+  end
+
+  #
   # Renders a button with default classes to style it as a form button.
   #
   def button(value = nil, options = {})
@@ -114,31 +164,63 @@ class TwitterBootstrapFormalwear::FormBuilder < ActionView::Helpers::FormBuilder
   end
 
   INPUTS.each do |input|
-    define_method input.to_s + '_group' do |attribute, *args, &block|
-      options = args.extract_options!
-      text    = args.any? ? args.shift : ''
-
-      self.group(attribute, text, options) do |builder|
-        builder.send(input, attribute, *(args << options), &block)
-      end
-    end
-
-    define_method input.to_s + '_label' do |attribute, *args, &block|
-      options = args.extract_options!
-      text    = args.any? ? args.shift : ''
-
-      self.label(attribute, text, options) do |builder|
-        builder.send(input, attribute, *(args << options), &block)
-      end
-    end
-
-    define_method input.to_s + '_controls' do |attribute, *args, &block|
-      options = args.extract_options!
-      text    = args.any? ? args.shift : ''
-
-      self.controls(attribute, text, options) do |builder|
-        builder.send(input, attribute, *(args << options), &block)
-      end
+  
+    case input.to_s
+    when 'collection_select'
+        define_method input.to_s + '_group' do |attribute, choices, value_method, text_method, *args, &block|
+        
+          options = args.extract_options!
+          text    = args.any? ? args.shift : ''
+    
+          self.group_for_collection_select(attribute, text, choices, value_method, text_method, options) do |builder|
+            builder.send(input, attribute, choices, value_method, text_method, *(args << options), &block)
+          end
+        end
+    
+        define_method input.to_s + '_label' do |attribute, *args, &block|
+          options = args.extract_options!
+          text    = args.any? ? args.shift : ''
+    
+          self.label(attribute, text, options) do |builder|
+            builder.send(input, attribute, *(args << options), &block)
+          end
+        end
+    
+        define_method input.to_s + '_controls' do |attribute, choices, value_method, text_method, *args, &block|
+          options = args.extract_options!
+          text    = args.any? ? args.shift : ''
+    
+          self.controls_for_collection_select(attribute, text, choices, value_method, text_method, options) do |builder|
+            builder.send(input, attribute, choices, value_method, text_method, *(args << options), &block)
+          end
+        end
+    else
+        define_method input.to_s + '_group' do |attribute, *args, &block|
+          options = args.extract_options!
+          text    = args.any? ? args.shift : ''
+    
+          self.group(attribute, text, options) do |builder|
+            builder.send(input, attribute, *(args << options), &block)
+          end
+        end
+    
+        define_method input.to_s + '_label' do |attribute, *args, &block|
+          options = args.extract_options!
+          text    = args.any? ? args.shift : ''
+    
+          self.label(attribute, text, options) do |builder|
+            builder.send(input, attribute, *(args << options), &block)
+          end
+        end
+    
+        define_method input.to_s + '_controls' do |attribute, *args, &block|
+          options = args.extract_options!
+          text    = args.any? ? args.shift : ''
+    
+          self.controls(attribute, text, options) do |builder|
+            builder.send(input, attribute, *(args << options), &block)
+          end
+        end    
     end
   end
 
